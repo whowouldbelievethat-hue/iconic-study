@@ -1,0 +1,1115 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ICONIC STUDY | مساحتك الدراسية</title>
+<meta name="description" content="Iconic Study - مساحتك الدراسية الشخصية لتنظيم المواد والدروس ومتابعة تقدمك">
+<meta property="og:title" content="Iconic Study">
+<meta property="og:description" content="مساحتك الدراسية الشخصية - نظم موادك، تابع تقدمك، وابدأ جلسات تركيز بومودورو">
+<meta property="og:image" content="ضيف هنا رابط صورة الموقع بعد ما ترفعها">
+<meta property="og:type" content="website">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800&family=Anton&family=Orbitron:wght@500;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg-1:#f7f2ea;
+  --bg-2:#efe6d8;
+  --panel-bg:rgba(255,255,255,0.6);
+  --accent-1:#a1443a;
+  --accent-2:#c9a24b;
+  --text:#2c2620;
+  --text-dim:#7a7267;
+  --line:rgba(43,38,32,0.1);
+  --btn-text:#ffffff;
+  --radius:20px;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{
+  font-family:'Cairo',sans-serif;
+  background:linear-gradient(160deg, var(--bg-1), var(--bg-2));
+  color:var(--text);
+  min-height:100vh;
+  overflow-x:hidden;
+  transition:background .5s ease, color .5s ease;
+}
+::selection{background:var(--accent-2);color:#fff;}
+::-webkit-scrollbar{width:8px;}
+::-webkit-scrollbar-track{background:transparent;}
+::-webkit-scrollbar-thumb{background:linear-gradient(var(--accent-1),var(--accent-2));border-radius:10px;}
+
+/* ambient background */
+.aurora{position:fixed;inset:0;z-index:-2;overflow:hidden;pointer-events:none;}
+.aurora span{position:absolute;border-radius:50%;filter:blur(90px);opacity:.3;}
+.aurora span:nth-child(1){width:380px;height:380px;background:var(--accent-1);top:-100px;left:-80px;animation:float1 20s ease-in-out infinite;}
+.aurora span:nth-child(2){width:420px;height:420px;background:var(--accent-2);bottom:-120px;right:-100px;animation:float2 24s ease-in-out infinite;}
+@keyframes float1{0%,100%{transform:translate(0,0);}50%{transform:translate(60px,40px);}}
+@keyframes float2{0%,100%{transform:translate(0,0);}50%{transform:translate(-50px,-30px);}}
+
+.bg-layer{
+  position:fixed;inset:0;z-index:-1;
+  background-size:cover;background-position:center;
+  opacity:0;transition:opacity .6s ease;
+}
+.bg-layer.active{opacity:1;}
+.bg-layer::after{
+  content:"";position:absolute;inset:0;
+  background:rgba(255,255,255,0.78);
+}
+
+/* entrance */
+@keyframes fadeSlideUp{from{opacity:0;transform:translateY(16px);}to{opacity:1;transform:translateY(0);}}
+main > *, aside > *{animation:fadeSlideUp .55s cubic-bezier(.2,.8,.2,1) both;}
+main > *:nth-child(1){animation-delay:.05s;}
+main > *:nth-child(2){animation-delay:.14s;}
+aside > *:nth-child(1){animation-delay:.1s;}
+aside > *:nth-child(2){animation-delay:.16s;}
+aside > *:nth-child(3){animation-delay:.22s;}
+aside > *:nth-child(4){animation-delay:.28s;}
+aside > *:nth-child(5){animation-delay:.34s;}
+
+.shell{
+  display:grid;
+  grid-template-columns:1fr 300px;
+  gap:24px;
+  max-width:1320px;
+  margin:0 auto;
+  padding:28px 20px 110px;
+  position:relative;
+}
+@media(max-width:900px){ .shell{grid-template-columns:1fr;} }
+
+header{
+  grid-column:1/-1;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:10px 4px 28px;
+  border-bottom:1px solid var(--line);
+  margin-bottom:8px;
+  flex-wrap:wrap;
+  gap:14px;
+}
+.brand{display:flex;align-items:center;gap:14px;}
+.crest{width:46px;height:46px;flex-shrink:0;}
+.crest svg{width:100%;height:100%;display:block;}
+.brand-text .en{
+  font-family:'Anton',sans-serif;
+  font-size:26px;
+  letter-spacing:3px;
+  background:linear-gradient(90deg,var(--accent-1),var(--accent-2));
+  -webkit-background-clip:text;background-clip:text;color:transparent;
+  line-height:1;min-height:26px;
+}
+.brand-text .en::after{ content:"|"; -webkit-text-fill-color:var(--accent-2); animation:pulse .9s steps(1) infinite; }
+.brand-text .ar{ font-size:12px; color:var(--text-dim); letter-spacing:1px; margin-top:4px; }
+
+.header-right{display:flex;align-items:center;gap:14px;flex-wrap:wrap;}
+.header-stats{ display:flex; gap:26px; font-size:13px; color:var(--text-dim); }
+.header-stats b{ display:block; font-family:'Anton',sans-serif; font-size:20px; color:var(--text); letter-spacing:1px; }
+@media(max-width:640px){ .header-stats{display:none;} }
+
+.icon-btn{
+  width:38px;height:38px;border-radius:50%;
+  border:1px solid var(--line);background:var(--panel-bg);
+  color:var(--text-dim);cursor:pointer;font-size:16px;
+  display:flex;align-items:center;justify-content:center;
+  transition:.25s;
+}
+.icon-btn:hover{ color:var(--accent-1); border-color:var(--accent-1); transform:rotate(25deg); }
+
+.user-chip{
+  display:none;align-items:center;gap:10px;
+  background:var(--panel-bg);border:1px solid var(--line);
+  padding:6px 14px 6px 8px;border-radius:30px;
+}
+.user-avatar{
+  width:28px;height:28px;border-radius:50%;
+  background:linear-gradient(135deg,var(--accent-1),var(--accent-2));
+  display:flex;align-items:center;justify-content:center;
+  font-family:'Anton',sans-serif;font-size:13px;color:#fff;flex-shrink:0;
+}
+.user-name{font-size:13px;font-weight:600;}
+.user-logout{background:none;border:none;color:var(--text-dim);cursor:pointer;font-size:14px;opacity:.6;}
+.user-logout:hover{opacity:1;color:var(--accent-1);}
+
+.panel{
+  background:var(--panel-bg);
+  border:1px solid var(--line);
+  border-radius:var(--radius);
+  backdrop-filter:blur(16px);
+  box-shadow:0 10px 40px -22px rgba(0,0,0,0.25);
+  transition:transform .3s cubic-bezier(.2,.8,.2,1), box-shadow .3s ease, background .5s ease, border-color .5s ease;
+}
+.panel:hover{ transform:translateY(-3px); box-shadow:0 18px 46px -18px rgba(0,0,0,0.28); }
+
+main{display:flex;flex-direction:column;gap:24px;}
+
+.timer-panel{ padding:32px; display:flex; align-items:center; gap:32px; flex-wrap:wrap; justify-content:center; }
+.timer-square{
+  position:relative;width:230px;height:230px;flex-shrink:0;
+  border-radius:22px;background:var(--panel-bg);border:1px solid var(--line);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;
+  box-shadow:0 20px 50px -22px rgba(0,0,0,0.3);
+  transition:box-shadow .3s ease;
+}
+.timer-square.running{ animation:glowPulse 2.2s ease-in-out infinite; }
+@keyframes glowPulse{
+  0%,100%{ box-shadow:0 20px 50px -22px rgba(0,0,0,0.3); }
+  50%{ box-shadow:0 20px 60px -14px var(--accent-2); }
+}
+.corner{position:absolute;width:18px;height:18px;border:2px solid var(--accent-2);opacity:.85;}
+.corner.tl{top:10px;left:10px;border-right:none;border-bottom:none;border-radius:6px 0 0 0;}
+.corner.tr{top:10px;right:10px;border-left:none;border-bottom:none;border-radius:0 6px 0 0;}
+.corner.bl{bottom:10px;left:10px;border-right:none;border-top:none;border-radius:0 0 0 6px;}
+.corner.br{bottom:10px;right:10px;border-left:none;border-top:none;border-radius:0 0 6px 0;}
+.timer-mode-label{font-size:11px;letter-spacing:3px;color:var(--accent-1);text-transform:uppercase;font-weight:700;}
+.timer-digits{
+  font-family:'Orbitron',sans-serif;font-size:44px;font-weight:700;letter-spacing:2px;
+  color:var(--text);text-shadow:0 0 22px var(--accent-2);font-variant-numeric:tabular-nums;
+}
+.timer-progress{width:78%;height:6px;border-radius:6px;background:var(--line);overflow:hidden;}
+.timer-progress-fill{height:100%;background:linear-gradient(90deg,var(--accent-1),var(--accent-2));width:100%;transition:width .3s linear;border-radius:6px;}
+
+.timer-controls{flex:1;min-width:240px;display:flex;flex-direction:column;gap:16px;}
+.timer-title{font-size:14px;color:var(--text-dim);}
+.mode-switch{display:flex;gap:8px;}
+.mode-btn{
+  flex:1;padding:9px 6px;border-radius:12px;border:1px solid var(--line);
+  background:rgba(0,0,0,0.02);color:var(--text-dim);font-family:'Cairo',sans-serif;font-size:13px;
+  cursor:pointer;transition:.25s;
+}
+.mode-btn.active{ background:linear-gradient(90deg,var(--accent-1),var(--accent-2)); color:var(--btn-text); border-color:transparent; }
+.timer-actions{display:flex;gap:10px;}
+.btn{
+  padding:12px 20px;border-radius:14px;border:none;cursor:pointer;
+  font-family:'Cairo',sans-serif;font-weight:600;font-size:14px;
+  transition:transform .2s cubic-bezier(.2,.8,.2,1), box-shadow .2s ease, opacity .2s ease;
+}
+.btn:hover{ transform:translateY(-2px); box-shadow:0 12px 26px -12px rgba(0,0,0,0.3); }
+.btn:active{ transform:scale(.96) translateY(0); }
+.btn-primary{ background:linear-gradient(90deg,var(--accent-1),var(--accent-2)); color:var(--btn-text); flex:1; }
+.btn-primary.pause{ background:linear-gradient(90deg,#8a8a8a,#5a5a5a); color:#fff; }
+.btn-ghost{ background:rgba(0,0,0,0.03); color:var(--text-dim); border:1px solid var(--line); }
+.session-count{font-size:12px;color:var(--text-dim);}
+.session-count b{color:var(--accent-1);}
+
+.section-head{ display:flex; align-items:center; justify-content:space-between; padding:0 4px; }
+.section-head h2{ font-family:'Anton',sans-serif; font-size:20px; letter-spacing:1px; color:var(--text); }
+.section-head h2 span{color:var(--accent-1);}
+.add-btn{
+  background:none;border:1px solid var(--line);color:var(--accent-1);
+  padding:8px 16px;border-radius:12px;font-family:'Cairo',sans-serif;font-size:13px;cursor:pointer;
+  transition:.25s;
+}
+.add-btn:hover{ border-color:var(--accent-1); background:rgba(0,0,0,0.03); }
+
+.subjects-grid{ display:grid; grid-template-columns:repeat(auto-fill,minmax(260px,1fr)); gap:16px; }
+.subject-card{ padding:20px; cursor:pointer; }
+.subject-top{display:flex;align-items:center;gap:12px;margin-bottom:14px;}
+.subject-dot{width:12px;height:12px;border-radius:50%;flex-shrink:0;box-shadow:0 0 10px 1px currentColor;}
+.subject-name{font-weight:700;font-size:16px;flex:1;}
+.subject-del{background:none;border:none;color:var(--text-dim);cursor:pointer;font-size:16px;opacity:.5;}
+.subject-del:hover{opacity:1;color:var(--accent-1);}
+.progress-track{height:8px;border-radius:6px;background:var(--line);overflow:hidden;margin-bottom:8px;}
+.progress-fill{height:100%;border-radius:6px;transition:width .4s cubic-bezier(.2,.8,.2,1);}
+.subject-meta{display:flex;justify-content:space-between;font-size:12px;color:var(--text-dim);}
+
+.lessons-list{margin-top:14px;display:flex;flex-direction:column;gap:8px;}
+.lesson-row{ display:flex;align-items:center;gap:10px; font-size:13px; padding:8px 10px; border-radius:10px; background:rgba(0,0,0,0.02); transition:.2s; }
+.lesson-row.done{opacity:.55;text-decoration:line-through;}
+.lesson-check{
+  width:18px;height:18px;border-radius:6px;border:1.5px solid var(--text-dim);
+  flex-shrink:0;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:12px;transition:.2s;
+}
+.lesson-check.checked{background:var(--accent-1);border-color:var(--accent-1);color:#fff;}
+.lesson-name{flex:1;}
+.lesson-del{background:none;border:none;color:var(--text-dim);cursor:pointer;opacity:.4;font-size:13px;}
+.lesson-del:hover{opacity:1;}
+.add-lesson-row{display:flex;gap:8px;margin-top:10px;}
+.add-lesson-row input{
+  flex:1;background:rgba(0,0,0,0.02);border:1px solid var(--line);
+  border-radius:10px;padding:8px 10px;color:var(--text);font-family:'Cairo',sans-serif;font-size:13px;
+}
+.add-lesson-row button{ background:var(--accent-1);border:none;color:#fff;border-radius:10px;padding:0 14px;cursor:pointer; }
+.empty-state{text-align:center;padding:50px 20px;color:var(--text-dim);grid-column:1/-1;}
+.empty-state .glyph{font-size:32px;margin-bottom:10px;opacity:.5;}
+
+aside{display:flex;flex-direction:column;gap:20px;}
+.tools-panel{padding:22px;}
+.tools-title{ font-family:'Anton',sans-serif; font-size:16px; letter-spacing:1px; margin-bottom:16px; color:var(--text-dim); }
+.tool-btn{
+  width:100%;display:flex;align-items:center;gap:12px;padding:14px;border-radius:14px;
+  border:1px solid var(--line);background:rgba(0,0,0,0.02);color:var(--text);
+  font-family:'Cairo',sans-serif;font-size:14px;cursor:pointer;margin-bottom:10px;transition:.25s;
+}
+.tool-btn:hover{border-color:var(--accent-1);background:rgba(0,0,0,0.04);transform:translateX(-2px);}
+.tool-icon{ width:34px;height:34px;border-radius:10px; display:flex;align-items:center;justify-content:center; font-size:16px;flex-shrink:0; color:#fff; }
+.tool-icon.yt{background:linear-gradient(135deg,var(--accent-1),#5c1a2e);}
+.tool-icon.note{background:linear-gradient(135deg,var(--accent-2),var(--accent-1));}
+
+.notes-area{
+  width:100%;min-height:140px;background:rgba(0,0,0,0.02);border:1px solid var(--line);
+  border-radius:12px;color:var(--text);font-family:'Cairo',sans-serif;font-size:13px;padding:12px;resize:vertical;
+}
+.quote-card{padding:20px;font-size:13px;color:var(--text-dim);line-height:1.9;}
+.quote-card b{display:block;color:var(--accent-1);font-size:12px;margin-bottom:6px;letter-spacing:1px;}
+
+.platform-item{
+  display:flex;align-items:center;gap:12px;padding:10px 8px;border-radius:12px;margin-bottom:8px;
+  background:rgba(0,0,0,0.02);cursor:pointer;transition:.25s;
+}
+.platform-item:hover{background:rgba(0,0,0,0.05);transform:translateX(-2px);}
+.platform-avatar{
+  width:32px;height:32px;border-radius:10px;flex-shrink:0;display:flex;align-items:center;justify-content:center;
+  font-family:'Anton',sans-serif;font-size:14px;color:#fff;background:linear-gradient(135deg,var(--accent-1),var(--accent-2));
+}
+.platform-name{flex:1;font-size:13px;font-weight:600;}
+.platform-del{background:none;border:none;color:var(--text-dim);opacity:.4;cursor:pointer;font-size:13px;}
+.platform-del:hover{opacity:1;color:var(--accent-1);}
+
+.fab-support{
+  position:fixed;bottom:24px;right:24px;width:54px;height:54px;border-radius:50%;
+  background:linear-gradient(135deg,var(--accent-2),var(--accent-1));
+  display:flex;align-items:center;justify-content:center;font-size:24px;
+  box-shadow:0 10px 26px -8px rgba(0,0,0,0.35);z-index:150;text-decoration:none;transition:.25s;
+}
+.fab-support:hover{transform:scale(1.1) rotate(-6deg);}
+
+.mini-player{
+  position:fixed;bottom:20px;left:50%;transform:translateX(-50%);
+  display:none;align-items:center;gap:10px;
+  background:var(--panel-bg);border:1px solid var(--line);backdrop-filter:blur(18px);
+  border-radius:40px;padding:8px 16px;box-shadow:0 14px 34px -14px rgba(0,0,0,.35);
+  z-index:140;max-width:90vw;width:380px;
+}
+.mini-player.active{display:flex;animation:fadeSlideUp .4s ease both;}
+.mini-btn{background:none;border:none;color:var(--text);font-size:16px;cursor:pointer;transition:.2s;}
+.mini-btn:hover{color:var(--accent-1);}
+.mini-btn.play{
+  width:34px;height:34px;border-radius:50%;background:linear-gradient(135deg,var(--accent-1),var(--accent-2));
+  color:#fff;display:flex;align-items:center;justify-content:center;
+}
+.mini-info{flex:1;min-width:0;}
+.mini-name{font-size:12px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.mini-progress{height:4px;background:var(--line);border-radius:4px;margin-top:6px;overflow:hidden;}
+.mini-progress-fill{height:100%;background:linear-gradient(90deg,var(--accent-1),var(--accent-2));width:0%;}
+
+.modal-overlay{
+  position:fixed;inset:0;background:rgba(20,15,10,0.45);backdrop-filter:blur(6px);
+  display:flex;align-items:center;justify-content:center;z-index:200;padding:20px;
+  opacity:0;visibility:hidden;transition:opacity .25s ease, visibility .25s ease;
+}
+.modal-overlay.open{opacity:1;visibility:visible;}
+.modal{
+  background:var(--panel-bg);backdrop-filter:blur(20px);border:1px solid var(--line);border-radius:20px;
+  padding:26px;width:100%;max-width:400px;
+  transform:scale(.94);opacity:0;transition:transform .25s cubic-bezier(.2,.8,.2,1), opacity .25s ease;
+}
+.modal-overlay.open .modal{transform:scale(1);opacity:1;}
+.modal h3{font-family:'Anton',sans-serif;letter-spacing:1px;margin-bottom:18px;font-size:18px;}
+.field{margin-bottom:14px;}
+.field label{display:block;font-size:12px;color:var(--text-dim);margin-bottom:6px;}
+.field input{
+  width:100%;padding:10px 12px;border-radius:10px;border:1px solid var(--line);
+  background:rgba(0,0,0,0.02);color:var(--text);font-family:'Cairo',sans-serif;
+}
+.color-picks{display:flex;gap:8px;flex-wrap:wrap;}
+.color-pick{width:28px;height:28px;border-radius:50%;cursor:pointer;border:2px solid transparent;transition:.2s;}
+.color-pick.sel{border-color:var(--text);}
+.theme-picks{display:flex;gap:12px;flex-wrap:wrap;}
+.theme-pick{width:46px;height:46px;border-radius:14px;cursor:pointer;border:2px solid transparent;transition:.2s;}
+.theme-pick.sel{border-color:var(--text);transform:scale(1.08);}
+.bg-controls{display:flex;gap:10px;flex-wrap:wrap;}
+.bg-controls .btn{font-size:12px;padding:10px 14px;}
+.modal-actions{display:flex;gap:10px;margin-top:20px;}
+
+.yt-modal .modal{max-width:820px;padding:0;overflow:hidden;background:#000;}
+.yt-modal iframe{width:100%;height:460px;display:block;border:0;}
+.yt-bar{display:flex;justify-content:space-between;align-items:center;padding:14px 18px;background:linear-gradient(90deg,var(--accent-1),var(--accent-2));}
+.yt-close{background:none;border:none;color:#fff;font-size:18px;cursor:pointer;}
+.yt-search-row{display:flex;gap:8px;padding:14px 18px;background:#0b0b0b;}
+.yt-search-row input{flex:1;padding:10px;border-radius:10px;border:1px solid var(--line);background:#141414;color:#fff;font-family:'Cairo',sans-serif;}
+.yt-search-row button{padding:0 16px;border-radius:10px;border:none;background:var(--accent-1);color:#fff;cursor:pointer;}
+
+.auth-overlay{
+  position:fixed;inset:0;background:rgba(20,15,10,0.55);backdrop-filter:blur(10px);
+  display:flex;align-items:center;justify-content:center;z-index:300;padding:20px;
+  transition:opacity .3s ease, visibility .3s ease;
+}
+.auth-overlay.hidden{opacity:0;visibility:hidden;pointer-events:none;}
+.auth-box{width:100%;max-width:380px;padding:36px 30px;text-align:center;}
+.auth-logo{display:flex;justify-content:center;margin-bottom:14px;}
+.auth-title{
+  font-family:'Anton',sans-serif;font-size:24px;letter-spacing:2px;
+  background:linear-gradient(90deg,var(--accent-1),var(--accent-2));
+  -webkit-background-clip:text;background-clip:text;color:transparent;margin-bottom:6px;
+}
+.auth-sub{font-size:13px;color:var(--text-dim);margin-bottom:22px;}
+.auth-box .field{text-align:right;}
+.auth-btn{width:100%;margin-top:6px;}
+.auth-note{font-size:11px;color:var(--text-dim);margin-top:16px;opacity:.7;}
+
+@keyframes pulse{0%,100%{opacity:1;}50%{opacity:.6;}}
+</style>
+</head>
+<body>
+
+<div class="aurora"><span></span><span></span></div>
+<div class="bg-layer" id="bgLayer"></div>
+
+<div class="auth-overlay" id="authOverlay">
+  <div class="auth-box panel">
+    <div class="auth-logo">
+      <svg viewBox="0 0 100 100" width="56" height="56">
+        <defs>
+          <linearGradient id="authGrad" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0%" style="stop-color:var(--accent-1)"/>
+            <stop offset="100%" style="stop-color:var(--accent-2)"/>
+          </linearGradient>
+        </defs>
+        <polygon points="50,3 95,30 95,70 50,97 5,70 5,30" fill="none" stroke="url(#authGrad)" stroke-width="4"/>
+        <polygon points="50,25 75,40 75,65 50,80 25,65 25,40" fill="url(#authGrad)" opacity="0.9"/>
+        <text x="50" y="58" text-anchor="middle" font-family="Anton" font-size="30" fill="#fff">IS</text>
+      </svg>
+    </div>
+    <div class="auth-title">ICONIC STUDY</div>
+    <div class="auth-sub">سجّل دخولك عشان تبدأ رحلتك الدراسية</div>
+    <div class="field">
+      <label>اسم المستخدم</label>
+      <input type="text" id="authUsername" placeholder="اكتب اسمك هنا..." maxlength="24">
+    </div>
+    <button class="btn btn-primary auth-btn" id="authSubmit">دخول</button>
+    <div class="auth-note">بياناتك بتتحفظ على جهازك بس، من غير سيرفر خارجي</div>
+  </div>
+</div>
+
+<div class="shell">
+  <header>
+    <div class="brand">
+      <div class="crest">
+        <svg viewBox="0 0 100 100">
+          <defs>
+            <linearGradient id="crestGrad" x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0%" style="stop-color:var(--accent-1)"/>
+              <stop offset="100%" style="stop-color:var(--accent-2)"/>
+            </linearGradient>
+          </defs>
+          <polygon points="50,3 95,30 95,70 50,97 5,70 5,30" fill="none" stroke="url(#crestGrad)" stroke-width="4"/>
+          <polygon points="50,25 75,40 75,65 50,80 25,65 25,40" fill="url(#crestGrad)" opacity="0.9"/>
+          <text x="50" y="58" text-anchor="middle" font-family="Anton" font-size="30" fill="#fff">IS</text>
+        </svg>
+      </div>
+      <div class="brand-text">
+        <div class="en" id="brandEn"></div>
+        <div class="ar">مساحتك الدراسية الخاصة</div>
+      </div>
+    </div>
+    <div class="header-stats">
+      <div>عدد الجلسات اليوم<b id="statSessions">0</b></div>
+      <div>دقائق التركيز<b id="statMinutes">0</b></div>
+      <div>المواد النشطة<b id="statSubjects">0</b></div>
+    </div>
+    <div class="header-right">
+      <button class="icon-btn" id="openSettings" title="الإعدادات">⚙</button>
+      <div class="user-chip" id="userChip">
+        <span class="user-avatar" id="userAvatar"></span>
+        <span class="user-name" id="userNameLabel"></span>
+        <button class="user-logout" id="logoutBtn" title="تسجيل خروج">⏻</button>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <div class="panel timer-panel">
+      <div class="timer-square" id="timerSquare">
+        <span class="corner tl"></span><span class="corner tr"></span>
+        <span class="corner bl"></span><span class="corner br"></span>
+        <div class="timer-mode-label" id="ringMode">تركيز</div>
+        <div class="timer-digits" id="ringTime">25:00</div>
+        <div class="timer-progress"><div class="timer-progress-fill" id="timerProgressFill"></div></div>
+      </div>
+      <div class="timer-controls">
+        <div class="timer-title">تايمر الدراسة — نظام بومودورو</div>
+        <div class="mode-switch">
+          <button class="mode-btn active" data-min="25" data-mode="تركيز">25 دقيقة</button>
+          <button class="mode-btn" data-min="45" data-mode="تركيز عميق">45 دقيقة</button>
+          <button class="mode-btn" data-min="5" data-mode="راحة">راحة 5</button>
+        </div>
+        <div class="timer-actions">
+          <button class="btn btn-primary" id="startPauseBtn">ابدأ</button>
+          <button class="btn btn-ghost" id="resetBtn">إعادة تعيين</button>
+        </div>
+        <div class="session-count">جلسات مكتملة اليوم: <b id="sessionInline">0</b></div>
+      </div>
+    </div>
+
+    <div>
+      <div class="section-head" style="margin-bottom:14px;">
+        <h2>مواد<span>ك</span> الدراسية</h2>
+        <button class="add-btn" id="openAddSubject">+ إضافة مادة</button>
+      </div>
+      <div class="subjects-grid" id="subjectsGrid"></div>
+    </div>
+  </main>
+
+  <aside>
+    <div class="panel tools-panel">
+      <div class="tools-title">منصات المدرسين</div>
+      <div id="platformsList"></div>
+      <button class="add-btn" id="openAddPlatform" style="width:100%;margin-top:10px;">+ إضافة منصة</button>
+    </div>
+
+    <div class="panel tools-panel">
+      <div class="tools-title">مشغل الأغاني</div>
+      <div id="songsList"></div>
+      <label class="add-btn" style="display:block;text-align:center;cursor:pointer;margin-top:10px;">
+        + إضافة أغنية من الجهاز
+        <input type="file" id="addSongInput" accept="audio/*" multiple style="display:none;">
+      </label>
+    </div>
+
+    <div class="panel tools-panel">
+      <div class="tools-title">أدوات التشغيل</div>
+      <button class="tool-btn" id="openYoutube">
+        <span class="tool-icon yt">▶</span><span>فتح يوتيوب</span>
+      </button>
+      <button class="tool-btn" id="focusNotesBtn">
+        <span class="tool-icon note">✎</span><span>ملاحظة سريعة</span>
+      </button>
+    </div>
+
+    <div class="panel tools-panel">
+      <div class="tools-title">ملاحظات سريعة</div>
+      <textarea class="notes-area" id="quickNotes" placeholder="اكتب أي حاجة عايز تفتكرها..."></textarea>
+    </div>
+
+    <div class="panel quote-card">
+      <b>تذكير</b>
+      الاستمرارية أهم من الكمال. جلسة تركيز واحدة كل يوم أفضل من عشر جلسات في يوم واحد ثم لا شيء.
+    </div>
+  </aside>
+</div>
+
+<div class="modal-overlay" id="subjectModal">
+  <div class="modal">
+    <h3>إضافة مادة جديدة</h3>
+    <div class="field"><label>اسم المادة</label><input type="text" id="newSubjectName" placeholder="مثال: تشريح"></div>
+    <div class="field"><label>اللون المميز</label><div class="color-picks" id="colorPicks"></div></div>
+    <div class="modal-actions">
+      <button class="btn btn-primary" id="confirmAddSubject" style="flex:1;">إضافة</button>
+      <button class="btn btn-ghost" id="cancelAddSubject" style="flex:1;">إلغاء</button>
+    </div>
+  </div>
+</div>
+
+<div class="modal-overlay" id="platformModal">
+  <div class="modal">
+    <h3>إضافة منصة جديدة</h3>
+    <div class="field"><label>اسم المدرس / المنصة</label><input type="text" id="newPlatformName" placeholder="مثال: أ. محمد صلاح"></div>
+    <div class="field"><label>رابط المنصة</label><input type="text" id="newPlatformUrl" placeholder="https://..."></div>
+    <div class="modal-actions">
+      <button class="btn btn-primary" id="confirmAddPlatform" style="flex:1;">إضافة</button>
+      <button class="btn btn-ghost" id="cancelAddPlatform" style="flex:1;">إلغاء</button>
+    </div>
+  </div>
+</div>
+
+<div class="modal-overlay" id="settingsModal">
+  <div class="modal">
+    <h3>الإعدادات</h3>
+    <div class="field">
+      <label>نمط الألوان</label>
+      <div class="theme-picks" id="themePicks"></div>
+    </div>
+    <div class="field">
+      <label>خلفية الموقع</label>
+      <div class="bg-controls">
+        <label class="btn btn-ghost" style="cursor:pointer;">
+          اختيار من المعرض
+          <input type="file" id="bgFileInput" accept="image/*" style="display:none;">
+        </label>
+        <button class="btn btn-ghost" id="removeBgBtn">إزالة الخلفية</button>
+      </div>
+    </div>
+    <div class="modal-actions">
+      <button class="btn btn-primary" id="closeSettings" style="flex:1;">تم</button>
+    </div>
+  </div>
+</div>
+
+<div class="modal-overlay yt-modal" id="youtubeModal">
+  <div class="modal">
+    <div class="yt-bar">
+      <span style="font-family:'Anton',sans-serif;letter-spacing:1px;color:#fff;">YOUTUBE</span>
+      <button class="yt-close" id="closeYoutube">✕</button>
+    </div>
+    <div class="yt-search-row">
+      <input type="text" id="ytSearchInput" placeholder="ابحث أو الصق رابط فيديو...">
+      <button id="ytSearchBtn">بحث</button>
+    </div>
+    <iframe id="ytFrame" src="https://www.youtube.com/embed?listType=search" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+  </div>
+</div>
+
+<a class="fab-support" href="https://wa.me/201111034153" target="_blank" title="الدعم الفني"><span>💬</span></a>
+
+<div class="mini-player" id="miniPlayer">
+  <button class="mini-btn" id="prevBtn">⏮</button>
+  <button class="mini-btn play" id="playPauseBtn">▶</button>
+  <button class="mini-btn" id="nextBtn">⏭</button>
+  <div class="mini-info">
+    <div class="mini-name" id="miniName">لم يتم اختيار أغنية</div>
+    <div class="mini-progress"><div class="mini-progress-fill" id="miniProgressFill"></div></div>
+  </div>
+</div>
+
+<audio id="audioPlayer"></audio>
+<audio id="dingSound" preload="auto">
+  <source src="data:audio/wav;base64,UklGRl9vT19XQVZFZm10IBAAAAABAAEAQB8AAEAfAAABAAgAZGF0YQAAAAA=" type="audio/wav">
+</audio>
+
+<script>
+/* ---------------- STORAGE KEYS ---------------- */
+const STORE_KEY = 'iconicman_subjects_v1';
+const STATS_KEY = 'iconicman_stats_v1';
+const NOTES_KEY = 'iconicman_notes_v1';
+const AUTH_KEY = 'iconicstudy_user_v1';
+const PLATFORMS_KEY = 'iconicstudy_platforms_v1';
+const THEME_KEY = 'iconicstudy_theme_v1';
+
+const PALETTE = ['#a1443a','#c9a24b','#5c7a5e','#39c986','#4a6fc9','#b73a5f','#7a5c39'];
+
+const THEMES = {
+  sand:{'--bg-1':'#f7f2ea','--bg-2':'#efe6d8','--panel-bg':'rgba(255,255,255,0.6)','--accent-1':'#a1443a','--accent-2':'#c9a24b','--text':'#2c2620','--text-dim':'#7a7267','--line':'rgba(43,38,32,0.1)','--btn-text':'#ffffff'},
+  sage:{'--bg-1':'#f3f6f0','--bg-2':'#e6ede1','--panel-bg':'rgba(255,255,255,0.6)','--accent-1':'#5c7a5e','--accent-2':'#c9a24b','--text':'#28322a','--text-dim':'#748073','--line':'rgba(40,50,42,0.1)','--btn-text':'#ffffff'},
+  dark:{'--bg-1':'#0a1210','--bg-2':'#120a10','--panel-bg':'rgba(20,25,22,0.65)','--accent-1':'#39c986','--accent-2':'#c9a24b','--text':'#f3ede4','--text-dim':'#a39a90','--line':'rgba(243,237,228,0.1)','--btn-text':'#0a1210'}
+};
+
+function loadSubjects(){ try{ return JSON.parse(localStorage.getItem(STORE_KEY)) || []; }catch(e){ return []; } }
+function saveSubjects(list){ localStorage.setItem(STORE_KEY, JSON.stringify(list)); }
+function loadStats(){
+  const today = new Date().toDateString();
+  let s;
+  try{ s = JSON.parse(localStorage.getItem(STATS_KEY)); }catch(e){ s = null; }
+  if(!s || s.date !== today){ s = {date: today, sessions:0, minutes:0}; }
+  return s;
+}
+function saveStats(s){ localStorage.setItem(STATS_KEY, JSON.stringify(s)); }
+let subjects = loadSubjects();
+let stats = loadStats();
+function uid(){ return Date.now().toString(36) + Math.random().toString(36).slice(2,6); }
+function escapeHtml(str){ const d = document.createElement('div'); d.textContent = str; return d.innerHTML; }
+
+/* ---------------- THEME ---------------- */
+function applyTheme(name){
+  const t = THEMES[name] || THEMES.sand;
+  Object.entries(t).forEach(([k,v])=> document.documentElement.style.setProperty(k, v));
+  localStorage.setItem(THEME_KEY, name);
+  document.querySelectorAll('.theme-pick').forEach(el=> el.classList.toggle('sel', el.dataset.theme===name));
+}
+const themePicks = document.getElementById('themePicks');
+Object.keys(THEMES).forEach(name=>{
+  const t = THEMES[name];
+  const el = document.createElement('div');
+  el.className = 'theme-pick';
+  el.dataset.theme = name;
+  el.style.background = `linear-gradient(135deg, ${t['--bg-1']}, ${t['--accent-1']} 60%, ${t['--accent-2']})`;
+  el.title = name;
+  el.addEventListener('click', ()=> applyTheme(name));
+  themePicks.appendChild(el);
+});
+
+/* ---------------- AUTH ---------------- */
+const authOverlay = document.getElementById('authOverlay');
+const authUsername = document.getElementById('authUsername');
+const userChip = document.getElementById('userChip');
+const userAvatar = document.getElementById('userAvatar');
+const userNameLabel = document.getElementById('userNameLabel');
+function getUser(){ return localStorage.getItem(AUTH_KEY) || ''; }
+function setUser(name){ localStorage.setItem(AUTH_KEY, name); }
+function clearUser(){ localStorage.removeItem(AUTH_KEY); }
+function showAuth(){ authOverlay.classList.remove('hidden'); userChip.style.display='none'; }
+function showApp(name){
+  authOverlay.classList.add('hidden');
+  userChip.style.display='flex';
+  userAvatar.textContent = name.trim().charAt(0).toUpperCase();
+  userNameLabel.textContent = name;
+}
+document.getElementById('authSubmit').addEventListener('click', submitAuth);
+authUsername.addEventListener('keydown', e=>{ if(e.key==='Enter') submitAuth(); });
+function submitAuth(){
+  const val = authUsername.value.trim();
+  if(!val) return;
+  setUser(val); showApp(val);
+}
+document.getElementById('logoutBtn').addEventListener('click', ()=>{
+  if(confirm('تسجيل خروج؟')){ clearUser(); authUsername.value=''; showAuth(); }
+});
+const existingUser = getUser();
+if(existingUser){ showApp(existingUser); } else { showAuth(); }
+
+/* ---------------- SETTINGS MODAL ---------------- */
+const settingsModal = document.getElementById('settingsModal');
+document.getElementById('openSettings').addEventListener('click', ()=> settingsModal.classList.add('open'));
+document.getElementById('closeSettings').addEventListener('click', ()=> settingsModal.classList.remove('open'));
+settingsModal.addEventListener('click', (e)=>{ if(e.target===settingsModal) settingsModal.classList.remove('open'); });
+
+/* ---------------- NOTES ---------------- */
+const notesArea = document.getElementById('quickNotes');
+notesArea.value = localStorage.getItem(NOTES_KEY) || '';
+notesArea.addEventListener('input', ()=> localStorage.setItem(NOTES_KEY, notesArea.value));
+document.getElementById('focusNotesBtn').addEventListener('click', ()=> notesArea.focus());
+
+/* ---------------- STATS ---------------- */
+function renderStats(){
+  document.getElementById('statSessions').textContent = stats.sessions;
+  document.getElementById('statMinutes').textContent = stats.minutes;
+  document.getElementById('statSubjects').textContent = subjects.length;
+  document.getElementById('sessionInline').textContent = stats.sessions;
+}
+
+/* ---------------- SUBJECTS ---------------- */
+const grid = document.getElementById('subjectsGrid');
+function renderSubjects(){
+  grid.innerHTML = '';
+  if(subjects.length === 0){
+    grid.innerHTML = `<div class="empty-state"><div class="glyph">◇</div>لسه مفيش مواد مضافة. ابدأ بإضافة أول مادة ليك.</div>`;
+    renderStats(); return;
+  }
+  subjects.forEach(subj => {
+    const total = subj.lessons.length;
+    const doneCount = subj.lessons.filter(l=>l.done).length;
+    const pct = total ? Math.round((doneCount/total)*100) : 0;
+    const card = document.createElement('div');
+    card.className = 'panel subject-card';
+    card.innerHTML = `
+      <div class="subject-top">
+        <span class="subject-dot" style="background:${subj.color};color:${subj.color}"></span>
+        <span class="subject-name">${escapeHtml(subj.name)}</span>
+        <button class="subject-del" data-id="${subj.id}" title="حذف المادة">✕</button>
+      </div>
+      <div class="progress-track"><div class="progress-fill" style="width:${pct}%;background:${subj.color}"></div></div>
+      <div class="subject-meta"><span>${doneCount} من ${total} درس</span><span>${pct}%</span></div>
+      <div class="lessons-list">
+        ${subj.lessons.map(l => `
+          <div class="lesson-row ${l.done?'done':''}">
+            <span class="lesson-check ${l.done?'checked':''}" data-subj="${subj.id}" data-lesson="${l.id}">${l.done?'✓':''}</span>
+            <span class="lesson-name">${escapeHtml(l.name)}</span>
+            <button class="lesson-del" data-subj="${subj.id}" data-lesson="${l.id}">✕</button>
+          </div>
+        `).join('')}
+      </div>
+      <div class="add-lesson-row">
+        <input type="text" placeholder="إضافة درس جديد..." data-subj-input="${subj.id}">
+        <button data-subj-add="${subj.id}">+</button>
+      </div>
+    `;
+    grid.appendChild(card);
+  });
+  renderStats();
+}
+grid.addEventListener('click', (e)=>{
+  const del = e.target.closest('.subject-del');
+  if(del){ subjects = subjects.filter(s=>s.id !== del.dataset.id); saveSubjects(subjects); renderSubjects(); return; }
+  const check = e.target.closest('.lesson-check');
+  if(check){
+    const subj = subjects.find(s=>s.id===check.dataset.subj);
+    const lesson = subj.lessons.find(l=>l.id===check.dataset.lesson);
+    lesson.done = !lesson.done;
+    saveSubjects(subjects); renderSubjects(); return;
+  }
+  const ldel = e.target.closest('.lesson-del');
+  if(ldel){
+    const subj = subjects.find(s=>s.id===ldel.dataset.subj);
+    subj.lessons = subj.lessons.filter(l=>l.id!==ldel.dataset.lesson);
+    saveSubjects(subjects); renderSubjects(); return;
+  }
+  const addBtn = e.target.closest('[data-subj-add]');
+  if(addBtn){
+    const id = addBtn.dataset.subjAdd;
+    const input = grid.querySelector(`[data-subj-input="${id}"]`);
+    const val = input.value.trim();
+    if(val){
+      const subj = subjects.find(s=>s.id===id);
+      subj.lessons.push({id: uid(), name: val, done:false});
+      saveSubjects(subjects); renderSubjects();
+    }
+  }
+});
+grid.addEventListener('keydown', (e)=>{
+  if(e.key === 'Enter' && e.target.matches('[data-subj-input]')){
+    const id = e.target.dataset.subjInput;
+    const val = e.target.value.trim();
+    if(val){
+      const subj = subjects.find(s=>s.id===id);
+      subj.lessons.push({id: uid(), name: val, done:false});
+      saveSubjects(subjects); renderSubjects();
+    }
+  }
+});
+
+/* ---------------- ADD SUBJECT MODAL ---------------- */
+const subjectModal = document.getElementById('subjectModal');
+const colorPicks = document.getElementById('colorPicks');
+let selectedColor = PALETTE[0];
+PALETTE.forEach(c=>{
+  const el = document.createElement('div');
+  el.className = 'color-pick' + (c===selectedColor?' sel':'');
+  el.style.background = c;
+  el.addEventListener('click', ()=>{
+    selectedColor = c;
+    [...colorPicks.children].forEach(ch=>ch.classList.remove('sel'));
+    el.classList.add('sel');
+  });
+  colorPicks.appendChild(el);
+});
+document.getElementById('openAddSubject').addEventListener('click', ()=>{
+  document.getElementById('newSubjectName').value = '';
+  subjectModal.classList.add('open');
+});
+document.getElementById('cancelAddSubject').addEventListener('click', ()=> subjectModal.classList.remove('open'));
+document.getElementById('confirmAddSubject').addEventListener('click', ()=>{
+  const name = document.getElementById('newSubjectName').value.trim();
+  if(!name) return;
+  subjects.push({id: uid(), name, color: selectedColor, lessons: []});
+  saveSubjects(subjects); renderSubjects();
+  subjectModal.classList.remove('open');
+});
+subjectModal.addEventListener('click', (e)=>{ if(e.target === subjectModal) subjectModal.classList.remove('open'); });
+
+/* ---------------- PLATFORMS ---------------- */
+const DEFAULT_PLATFORMS = [
+  {id:'p1', name:'أ. محمد عبدالمعبود', url:'https://share.google/zqrctQkAMtb0izqA4'},
+  {id:'p2', name:'أ. وليد محسن', url:'https://share.google/fYaoqIROuZ2seC4mX'},
+  {id:'p3', name:'أ. أحمد الجوهري', url:'https://share.google/WB8izwkYgtOK27b0N'},
+  {id:'p4', name:'بسطتهالك - ثانوية', url:'https://share.google/qeIfeszAU3tKhys6u'},
+  {id:'p5', name:'أ. خالد صقر', url:'https://share.google/cpw0h3XNqPvGNb93D'}
+];
+function loadPlatforms(){
+  try{
+    const saved = JSON.parse(localStorage.getItem(PLATFORMS_KEY));
+    if(saved && saved.length) return saved;
+  }catch(e){}
+  savePlatforms(DEFAULT_PLATFORMS);
+  return DEFAULT_PLATFORMS;
+}
+function savePlatforms(list){ localStorage.setItem(PLATFORMS_KEY, JSON.stringify(list)); }
+let platforms = loadPlatforms();
+const platformsList = document.getElementById('platformsList');
+function renderPlatforms(){
+  platformsList.innerHTML = '';
+  platforms.forEach(p=>{
+    const row = document.createElement('div');
+    row.className = 'platform-item';
+    row.innerHTML = `
+      <span class="platform-avatar">${escapeHtml(p.name).charAt(0)}</span>
+      <span class="platform-name">${escapeHtml(p.name)}</span>
+      <button class="platform-del" data-id="${p.id}" title="حذف">✕</button>
+    `;
+    row.addEventListener('click', (e)=>{
+      if(e.target.closest('.platform-del')) return;
+      window.open(p.url, '_blank');
+    });
+    platformsList.appendChild(row);
+  });
+}
+renderPlatforms();
+platformsList.addEventListener('click', (e)=>{
+  const del = e.target.closest('.platform-del');
+  if(del){ platforms = platforms.filter(p=>p.id !== del.dataset.id); savePlatforms(platforms); renderPlatforms(); }
+});
+const platformModal = document.getElementById('platformModal');
+document.getElementById('openAddPlatform').addEventListener('click', ()=>{
+  document.getElementById('newPlatformName').value='';
+  document.getElementById('newPlatformUrl').value='';
+  platformModal.classList.add('open');
+});
+document.getElementById('cancelAddPlatform').addEventListener('click', ()=> platformModal.classList.remove('open'));
+document.getElementById('confirmAddPlatform').addEventListener('click', ()=>{
+  const name = document.getElementById('newPlatformName').value.trim();
+  let url = document.getElementById('newPlatformUrl').value.trim();
+  if(!name || !url) return;
+  if(!/^https?:\/\//i.test(url)) url = 'https://' + url;
+  platforms.push({id: uid(), name, url});
+  savePlatforms(platforms); renderPlatforms();
+  platformModal.classList.remove('open');
+});
+platformModal.addEventListener('click', (e)=>{ if(e.target===platformModal) platformModal.classList.remove('open'); });
+
+/* ---------------- INDEXEDDB (background image + songs) ---------------- */
+let db;
+function openDB(){
+  return new Promise((resolve,reject)=>{
+    const req = indexedDB.open('iconicStudyDB', 1);
+    req.onupgradeneeded = (e)=>{
+      const d = e.target.result;
+      if(!d.objectStoreNames.contains('songs')) d.createObjectStore('songs',{keyPath:'id',autoIncrement:true});
+      if(!d.objectStoreNames.contains('meta')) d.createObjectStore('meta',{keyPath:'key'});
+    };
+    req.onsuccess = ()=>{ db=req.result; resolve(db); };
+    req.onerror = ()=>reject(req.error);
+  });
+}
+function addSong(file){
+  return new Promise((resolve,reject)=>{
+    const tx = db.transaction('songs','readwrite');
+    tx.objectStore('songs').add({name:file.name, blob:file});
+    tx.oncomplete = ()=>resolve();
+    tx.onerror = ()=>reject(tx.error);
+  });
+}
+function getAllSongs(){
+  return new Promise((resolve,reject)=>{
+    const tx = db.transaction('songs','readonly');
+    const req = tx.objectStore('songs').getAll();
+    req.onsuccess = ()=>resolve(req.result);
+    req.onerror = ()=>reject(req.error);
+  });
+}
+function deleteSongDB(id){
+  return new Promise((resolve,reject)=>{
+    const tx = db.transaction('songs','readwrite');
+    tx.objectStore('songs').delete(id);
+    tx.oncomplete = ()=>resolve();
+    tx.onerror = ()=>reject(tx.error);
+  });
+}
+function setMeta(key, value){
+  return new Promise((resolve,reject)=>{
+    const tx = db.transaction('meta','readwrite');
+    tx.objectStore('meta').put({key, value});
+    tx.oncomplete = ()=>resolve();
+    tx.onerror = ()=>reject(tx.error);
+  });
+}
+function getMeta(key){
+  return new Promise((resolve,reject)=>{
+    const tx = db.transaction('meta','readonly');
+    const req = tx.objectStore('meta').get(key);
+    req.onsuccess = ()=>resolve(req.result ? req.result.value : null);
+    req.onerror = ()=>reject(req.error);
+  });
+}
+function deleteMeta(key){
+  return new Promise((resolve,reject)=>{
+    const tx = db.transaction('meta','readwrite');
+    tx.objectStore('meta').delete(key);
+    tx.oncomplete = ()=>resolve();
+    tx.onerror = ()=>reject(tx.error);
+  });
+}
+
+/* ---------------- BACKGROUND PICKER ---------------- */
+const bgLayer = document.getElementById('bgLayer');
+async function loadBackground(){
+  const blob = await getMeta('bgImage');
+  if(blob){
+    const url = URL.createObjectURL(blob);
+    bgLayer.style.backgroundImage = `url(${url})`;
+    bgLayer.classList.add('active');
+  }
+}
+document.getElementById('bgFileInput').addEventListener('change', async (e)=>{
+  const file = e.target.files[0];
+  if(!file) return;
+  await setMeta('bgImage', file);
+  const url = URL.createObjectURL(file);
+  bgLayer.style.backgroundImage = `url(${url})`;
+  bgLayer.classList.add('active');
+});
+document.getElementById('removeBgBtn').addEventListener('click', async ()=>{
+  await deleteMeta('bgImage');
+  bgLayer.style.backgroundImage = '';
+  bgLayer.classList.remove('active');
+});
+
+/* ---------------- MUSIC PLAYER ---------------- */
+let songs = [];
+let currentIndex = -1;
+let currentObjectUrl = null;
+const audioPlayer = document.getElementById('audioPlayer');
+const miniPlayer = document.getElementById('miniPlayer');
+const miniName = document.getElementById('miniName');
+const miniProgressFill = document.getElementById('miniProgressFill');
+const playPauseBtn = document.getElementById('playPauseBtn');
+const songsList = document.getElementById('songsList');
+
+async function loadSongs(){ songs = await getAllSongs(); renderSongs(); }
+function renderSongs(){
+  songsList.innerHTML = '';
+  if(songs.length===0){
+    songsList.innerHTML = `<div style="font-size:12px;color:var(--text-dim);text-align:center;padding:10px 0;">لسه مفيش أغاني مضافة</div>`;
+    return;
+  }
+  songs.forEach((s, idx)=>{
+    const row = document.createElement('div');
+    row.className = 'platform-item';
+    row.innerHTML = `
+      <span class="platform-avatar">${idx===currentIndex ? '♪' : '🎵'}</span>
+      <span class="platform-name">${escapeHtml(s.name)}</span>
+      <button class="platform-del" data-idx="${idx}" title="حذف">✕</button>
+    `;
+    row.addEventListener('click', (e)=>{
+      if(e.target.closest('.platform-del')) return;
+      playSong(idx);
+    });
+    songsList.appendChild(row);
+  });
+}
+songsList.addEventListener('click', async (e)=>{
+  const del = e.target.closest('.platform-del');
+  if(del){
+    const idx = parseInt(del.dataset.idx);
+    const song = songs[idx];
+    await deleteSongDB(song.id);
+    if(idx===currentIndex){ audioPlayer.pause(); miniPlayer.classList.remove('active'); currentIndex=-1; }
+    await loadSongs();
+  }
+});
+document.getElementById('addSongInput').addEventListener('change', async (e)=>{
+  for(const file of e.target.files){ await addSong(file); }
+  e.target.value = '';
+  await loadSongs();
+});
+function playSong(idx){
+  if(currentObjectUrl) URL.revokeObjectURL(currentObjectUrl);
+  currentIndex = idx;
+  const song = songs[idx];
+  currentObjectUrl = URL.createObjectURL(song.blob);
+  audioPlayer.src = currentObjectUrl;
+  audioPlayer.play();
+  miniName.textContent = song.name;
+  miniPlayer.classList.add('active');
+  playPauseBtn.textContent = '⏸';
+  renderSongs();
+}
+playPauseBtn.addEventListener('click', ()=>{
+  if(currentIndex===-1) return;
+  if(audioPlayer.paused){ audioPlayer.play(); playPauseBtn.textContent='⏸'; }
+  else{ audioPlayer.pause(); playPauseBtn.textContent='▶'; }
+});
+document.getElementById('nextBtn').addEventListener('click', ()=>{ if(songs.length) playSong((currentIndex+1) % songs.length); });
+document.getElementById('prevBtn').addEventListener('click', ()=>{ if(songs.length) playSong((currentIndex-1+songs.length) % songs.length); });
+audioPlayer.addEventListener('ended', ()=>{ if(songs.length) playSong((currentIndex+1) % songs.length); });
+audioPlayer.addEventListener('timeupdate', ()=>{
+  if(audioPlayer.duration) miniProgressFill.style.width = (audioPlayer.currentTime/audioPlayer.duration*100)+'%';
+});
+
+/* ---------------- TIMER ---------------- */
+const timerSquare = document.getElementById('timerSquare');
+const timerDigits = document.getElementById('ringTime');
+const ringMode = document.getElementById('ringMode');
+const timerProgressFill = document.getElementById('timerProgressFill');
+const startPauseBtn = document.getElementById('startPauseBtn');
+const resetBtn = document.getElementById('resetBtn');
+const dingSound = document.getElementById('dingSound');
+
+let totalSeconds = 25*60;
+let remaining = totalSeconds;
+let currentMode = 'تركيز';
+let timerInterval = null;
+let isRunning = false;
+
+function formatTime(sec){
+  const m = Math.floor(sec/60).toString().padStart(2,'0');
+  const s = (sec%60).toString().padStart(2,'0');
+  return `${m}:${s}`;
+}
+function updateTimerDisplay(){
+  const pct = remaining/totalSeconds;
+  timerProgressFill.style.width = (pct*100)+'%';
+  timerDigits.textContent = formatTime(remaining);
+}
+updateTimerDisplay();
+
+document.querySelectorAll('.mode-btn').forEach(btn=>{
+  btn.addEventListener('click', ()=>{
+    document.querySelectorAll('.mode-btn').forEach(b=>b.classList.remove('active'));
+    btn.classList.add('active');
+    totalSeconds = parseInt(btn.dataset.min)*60;
+    remaining = totalSeconds;
+    currentMode = btn.dataset.mode;
+    ringMode.textContent = currentMode;
+    pauseTimer();
+    updateTimerDisplay();
+  });
+});
+
+function startTimer(){
+  isRunning = true;
+  startPauseBtn.textContent = 'إيقاف مؤقت';
+  startPauseBtn.classList.add('pause');
+  timerSquare.classList.add('running');
+  timerInterval = setInterval(()=>{
+    remaining--;
+    updateTimerDisplay();
+    if(remaining <= 0){
+      clearInterval(timerInterval);
+      isRunning = false;
+      startPauseBtn.textContent = 'ابدأ';
+      startPauseBtn.classList.remove('pause');
+      timerSquare.classList.remove('running');
+      if(currentMode !== 'راحة'){
+        stats.sessions += 1;
+        stats.minutes += Math.round(totalSeconds/60);
+        saveStats(stats); renderStats();
+      }
+      try{ dingSound.play(); }catch(e){}
+      remaining = totalSeconds;
+      updateTimerDisplay();
+    }
+  }, 1000);
+}
+function pauseTimer(){
+  clearInterval(timerInterval);
+  isRunning = false;
+  startPauseBtn.textContent = 'ابدأ';
+  startPauseBtn.classList.remove('pause');
+  timerSquare.classList.remove('running');
+}
+startPauseBtn.addEventListener('click', ()=>{ if(isRunning) pauseTimer(); else startTimer(); });
+resetBtn.addEventListener('click', ()=>{ pauseTimer(); remaining = totalSeconds; updateTimerDisplay(); });
+
+/* ---------------- YOUTUBE MODAL ---------------- */
+const youtubeModal = document.getElementById('youtubeModal');
+const ytFrame = document.getElementById('ytFrame');
+const ytSearchInput = document.getElementById('ytSearchInput');
+document.getElementById('openYoutube').addEventListener('click', ()=> youtubeModal.classList.add('open'));
+document.getElementById('closeYoutube').addEventListener('click', ()=>{ youtubeModal.classList.remove('open'); ytFrame.src = 'about:blank'; });
+youtubeModal.addEventListener('click', (e)=>{ if(e.target === youtubeModal){ youtubeModal.classList.remove('open'); ytFrame.src = 'about:blank'; } });
+function extractVideoId(url){ const m = url.match(/(?:youtu\.be\/|v=|embed\/)([a-zA-Z0-9_-]{11})/); return m ? m[1] : null; }
+document.getElementById('ytSearchBtn').addEventListener('click', doYtSearch);
+ytSearchInput.addEventListener('keydown', (e)=>{ if(e.key==='Enter') doYtSearch(); });
+function doYtSearch(){
+  const val = ytSearchInput.value.trim();
+  if(!val) return;
+  const vid = extractVideoId(val);
+  if(vid){ ytFrame.src = `https://www.youtube.com/embed/${vid}?autoplay=1`; }
+  else{
+    ytFrame.src = `https://www.youtube.com/embed?listType=search&list=${encodeURIComponent(val)}`;
+    window.open(`https://www.youtube.com/results?search_query=${encodeURIComponent(val)}`, '_blank');
+  }
+}
+
+/* ---------------- BRAND TYPEWRITER ---------------- */
+function typeBrand(text){
+  const el = document.getElementById('brandEn');
+  el.textContent = '';
+  let i = 0;
+  const iv = setInterval(()=>{ el.textContent = text.slice(0,i+1); i++; if(i>=text.length) clearInterval(iv); }, 90);
+}
+
+/* ---------------- INIT ---------------- */
+(async function init(){
+  applyTheme(localStorage.getItem(THEME_KEY) || 'sand');
+  renderSubjects();
+  typeBrand('ICONIC STUDY');
+  await openDB();
+  await loadBackground();
+  await loadSongs();
+})();
+</script>
+</body>
+</html>
